@@ -4,16 +4,11 @@ import pandas as pd
 from sklearn.preprocessing import StandardScaler
 from sklearn.linear_model import LassoCV
 
-import exercise_C
+import loadData
 
-# TODO: getadta
 print("loading...")
-sm_df = pd.read_csv('data/SM.csv')
-print("smiles to descriptor...")
-descriptors_df = sm_df["SMILES"].map(exercise_C.SmileToDescriptorVec)
-
-train_df = pd.DataFrame([row for row in descriptors_df])
-ans_df = sm_df["PPB (fb)"]
+train_df, ans_df = loadData.load_data_from_smile_csv(
+    "data/SM.csv", use_cache=True)
 
 print("fitting...")
 scaler = StandardScaler()

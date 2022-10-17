@@ -3,7 +3,7 @@ from rdkit.ML.Descriptors import MoleculeDescriptors
 from rdkit import Chem
 
 
-def SmileToDescriptorVec(smile: str) -> list[float]:
+def smile_to_descriptor_vec(smile: str) -> list[float]:
     mol = Chem.MolFromSmiles(smile)
 
     descriptor_names = [descriptor_name[0]
