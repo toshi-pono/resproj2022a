@@ -3,6 +3,7 @@ import pandas as pd
 
 from sklearn.preprocessing import StandardScaler
 from sklearn.linear_model import LassoCV
+from sklearn.metrics import mean_squared_error
 
 import loadData
 
@@ -24,8 +25,17 @@ clf.fit(scaler.transform(train_df), ans_df)
 # verbose=False)
 print("done")
 
-print(clf.alpha_)
+# 最良パラメータ
+print(f"Best Alpha (from MSE path):{clf.alpha_}")
 
-print(clf.coef_)
+# print(clf.coef_)
+# print(clf.intercept_)
 
-print(clf.intercept_)
+# 最良パラメータにおける InKa のRMSE
+# TODO: 
+print(f"MSE at Best Alpha:{clf.mse_path_[np.argmin(clf.mse_path_.mean(axis=-1),)]}")
+# print(clf.mse_path_)
+y_pred = clf.predict(scaler.transform(train_df))
+mse = mean_squared_error(ans_df, y_pred)
+
+print(f"{mse=}")
