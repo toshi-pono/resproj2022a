@@ -1,5 +1,6 @@
 import pandas as pd
 import exercise_C
+import exercise_D
 
 
 def load_data_from_smile_csv(file: str, use_cache=False) -> tuple[pd.DataFrame, pd.DataFrame]:
@@ -18,7 +19,7 @@ def load_data_from_smile_csv(file: str, use_cache=False) -> tuple[pd.DataFrame, 
     smile_df = pd.read_csv(file)
     descriptors_df = smile_df["SMILES"].map(exercise_C.smile_to_descriptor_vec)
     train_df = pd.DataFrame([row for row in descriptors_df])
-    ans_df = smile_df["PPB (fb)"]
+    ans_df = smile_df["PPB (fb)"].map(exercise_D.calc_lnka)
 
     # save cache
     train_df.to_pickle(file + ".train.pkl")

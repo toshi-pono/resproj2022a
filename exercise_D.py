@@ -9,4 +9,5 @@ C: Final[float] = 0.3
 
 
 def calc_lnka(fb: float) -> float:
-    return C * math.log(fb / 1 - fb)
+    fb = fb * 0.99 + 0.005
+    return C * math.log(fb / (1.0 - fb))
