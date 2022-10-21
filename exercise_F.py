@@ -19,7 +19,7 @@ def main():
     print("fitting...")
     pipeline = Pipeline(steps=[('scaler', StandardScaler()), ('model', Lasso())])
     glf = GridSearchCV(pipeline, param_grid={
-                    "model__alpha": np.arange(0.001, 0.01, 0.0001)}, cv=5, scoring="neg_root_mean_squared_error")
+                    "model__alpha": np.arange(0.001, 0.01, 0.0001)}, cv=5, scoring="neg_root_mean_squared_error", n_jobs=-1)
     glf.fit(train_df, ans_df)
     print("done")
     
