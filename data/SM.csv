@@ -1,4 +1,4 @@
-﻿id (from Ingle et al.),molecule,PPB (fb),SMILES,Set
+﻿id (from Ingle et al.),molecule,PPB(fb),SMILES,Set
 1.0003999,17-hydroxyprogesterone,0.84999999,OC1(CCC2C3C(CCC12C)C1(C(=CC(=O)CC1)CC3)C)C(=O)C,Dte
 1.0005,17-a-estradiol,0.98,OC1CCC2C3C(CCC12C)c1c(cc(O)cc1)CC3,Dte
 1.0012,3b(m-CF3),0.62,Fc1cc2c(N(C=C(C(O)=O)C2=O)c2cc(ccc2)C(F)(F)F)cc1N1CCNCC1,Dte
