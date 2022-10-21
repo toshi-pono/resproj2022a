@@ -70,3 +70,61 @@ RMSE: 0.4556293131175889
 テストデータ全体に対するRMSE: 0.6603349692462247
 相関係数: 0.5155421034087037
 ----------------------------------------
+
+もういっかいやった
+    param_grid = {'model__max_depth': np.arange(2, 10, 1),
+              'model__min_samples_leaf': np.arange(1, 10, 1)}
+loading...
+fitting...
+done
+----------------------------------------
+RMSE: 0.4478559714522433
+最良パラメータ: {'model__max_depth': 9, 'model__min_samples_leaf': 1}
+    rank_test_score                                             params  mean_test_score
+63                1  {'model__max_depth': 9, 'model__min_samples_le...        -0.447856
+55                2  {'model__max_depth': 8, 'model__min_samples_le...        -0.450141
+56                3  {'model__max_depth': 8, 'model__min_samples_le...        -0.451694
+54                4  {'model__max_depth': 8, 'model__min_samples_le...        -0.453893
+64                5  {'model__max_depth': 9, 'model__min_samples_le...        -0.453900
+..              ...                                                ...              ...
+4                68  {'model__max_depth': 2, 'model__min_samples_le...        -0.536044
+2                69  {'model__max_depth': 2, 'model__min_samples_le...        -0.536093
+1                70  {'model__max_depth': 2, 'model__min_samples_le...        -0.536218
+8                71  {'model__max_depth': 2, 'model__min_samples_le...        -0.536293
+6                72  {'model__max_depth': 2, 'model__min_samples_le...        -0.536349
+
+[72 rows x 3 columns]
+----------------------------------------
+テストデータ全体に対するRMSE: 0.6674831456405215
+相関係数: 0.5191742445635141
+----------------------------------------
+
+
+もういっかいやったx2
+    param_grid = {'model__max_depth': np.arange(2, 15, 1),
+              'model__min_samples_leaf': np.arange(1, 10, 1)}
+
+loading...
+fitting...
+done
+----------------------------------------
+RMSE: 0.4448005645440819
+最良パラメータ: {'model__max_depth': 12, 'model__min_samples_leaf': 1}
+     rank_test_score                                             params  mean_test_score
+90                 1  {'model__max_depth': 12, 'model__min_samples_l...        -0.444801
+108                2  {'model__max_depth': 14, 'model__min_samples_l...        -0.445382
+99                 3  {'model__max_depth': 13, 'model__min_samples_l...        -0.446573
+82                 4  {'model__max_depth': 11, 'model__min_samples_l...        -0.447557
+91                 5  {'model__max_depth': 12, 'model__min_samples_l...        -0.447632
+..               ...                                                ...              ...
+1                113  {'model__max_depth': 2, 'model__min_samples_le...        -0.535983
+7                114  {'model__max_depth': 2, 'model__min_samples_le...        -0.536132
+4                115  {'model__max_depth': 2, 'model__min_samples_le...        -0.536316
+0                116  {'model__max_depth': 2, 'model__min_samples_le...        -0.536565
+3                117  {'model__max_depth': 2, 'model__min_samples_le...        -0.536595
+
+[117 rows x 3 columns]
+----------------------------------------
+テストデータ全体に対するRMSE: 0.6890087204753333
+相関係数: 0.532114211444811
+----------------------------------------

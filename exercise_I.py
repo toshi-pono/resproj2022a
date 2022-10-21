@@ -18,8 +18,8 @@ def main():
         "data/CP.csv", use_cache=True)
 
     print("fitting...")
-    param_grid = {'model__max_depth': [2, 3, 4, 5, 6, 7],
-              'model__min_samples_leaf': [1, 3, 5, 7, 10]}
+    param_grid = {'model__max_depth': np.arange(2, 15, 1),
+              'model__min_samples_leaf': np.arange(1, 10, 1)}
     pipeline = Pipeline(steps=[('scaler', StandardScaler()), ('model', RandomForestRegressor())])
     glf = GridSearchCV(pipeline, param_grid, cv=5, scoring="neg_root_mean_squared_error", n_jobs=-1)
     glf.fit(train_df, ans_df)
