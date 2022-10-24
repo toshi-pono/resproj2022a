@@ -17,7 +17,7 @@ def load_data_from_smile_csv(file: str, use_cache=False) -> tuple[pd.DataFrame, 
             pass
 
     smile_df = pd.read_csv(file)
-    descriptors_df = smile_df["SMILES"].map(exercise_C.smile_to_descriptor_vec)
+    descriptors_df = smile_df["SMILES"].map(exercise_C.smiles_to_descriptors)
     train_df = pd.DataFrame([row for row in descriptors_df])
     ans_df = smile_df["PPB(fb)"].map(parse_PPB).map(exercise_D.calc_lnka)
 
@@ -25,6 +25,7 @@ def load_data_from_smile_csv(file: str, use_cache=False) -> tuple[pd.DataFrame, 
     train_df.to_pickle(file + ".train.pkl")
     ans_df.to_pickle(file + ".ans.pkl")
     return (train_df, ans_df)
+
 
 def parse_PPB(fb: str | float) -> float:
     """
@@ -38,6 +39,7 @@ def parse_PPB(fb: str | float) -> float:
         else:
             s = fb.split("-")
             return (float(s[0]) + float(s[1])) / 2
+
 
 def is_float(s: str) -> bool:
     try:
