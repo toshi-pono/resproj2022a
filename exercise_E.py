@@ -8,6 +8,7 @@ from sklearn.model_selection import GridSearchCV
 from sklearn.metrics import mean_squared_error
 
 import loadData
+import exercise_C
 
 
 def fit_model():
@@ -27,9 +28,13 @@ def fit_model():
     print(f"RMSE: {-glf.best_score_}")
     print(f"最良パラメータ: {glf.best_params_}")
     print("----------------------------------------")
-    print("coef: ", len(glf.best_estimator_.named_steps["model"].coef_))
+    coef_df = pd.DataFrame(
+        glf.best_estimator_.named_steps["model"].coef_, index=exercise_C.descriptor_names(), columns=["coef"])
+    print("## coef")
+    print(coef_df.sort_values("coef", ascending=False))
 
     print("----------------------------------------")
+    print("## test scores")
     result_df = pd.DataFrame(glf.cv_results_)
     result_df.sort_values(
         by="rank_test_score", inplace=True)
