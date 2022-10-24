@@ -1,6 +1,5 @@
-from math import log
-from typing import Final
 import math
+from typing import Final
 
 
 def calc_lnka(fb: float) -> float:
