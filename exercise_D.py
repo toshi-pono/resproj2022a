@@ -15,3 +15,7 @@ def calc_lnka(fb: float) -> float:
     fb = fb * 0.99 + 0.005
     C: Final[float] = 0.3
     return C * math.log(fb / (1.0 - fb))
+
+
+def toPPB(lnKa: float) -> float:
+    return 1 / (1 + math.exp(lnKa / 0.3))

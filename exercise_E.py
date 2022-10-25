@@ -11,6 +11,7 @@ from sklearn.model_selection import train_test_split
 
 import loadData
 import exercise_C
+import exercise_D
 
 
 def fit_model():
@@ -55,15 +56,12 @@ def fit_model():
 
     # 相関係数
     print(f"テストデータセットでの相関係数: {np.corrcoef(y_test, y_pred)[0, 1]}")
-    plt.scatter(list(map(toPPB, y_pred)), list(map(toPPB, y_test)))
+    plt.scatter(list(map(exercise_D.toPPB, y_pred)),
+                list(map(exercise_D.toPPB, y_test)))
     plt.xlabel(r"$Test\, Predicted\, f_b$")
     plt.ylabel(r"$Test\, f_b$")
     plt.savefig("./output/ex_E_test.png")
     print("----------------------------------------")
-
-
-def toPPB(lnKa: float) -> float:
-    return 1 / (1 + np.exp(lnKa / 0.3))
 
 
 if __name__ == "__main__":
