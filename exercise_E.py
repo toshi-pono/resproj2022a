@@ -1,11 +1,13 @@
 import numpy as np
 import pandas as pd
+import matplotlib.pyplot as plt
 
 from sklearn.preprocessing import StandardScaler
 from sklearn.linear_model import Lasso
 from sklearn.pipeline import Pipeline
 from sklearn.model_selection import GridSearchCV
 from sklearn.metrics import mean_squared_error
+from sklearn.model_selection import train_test_split
 
 import loadData
 import exercise_C
@@ -13,28 +15,30 @@ import exercise_C
 
 def fit_model():
     print("loading...")
-    train_df, ans_df = loadData.load_data_from_smile_csv(
+    X_small_df, y_small_df = loadData.load_data_from_smile_csv(
         "data/SM.csv", use_cache=True)
+    X_train, X_test, y_train, y_test = train_test_split(
+        X_small_df, y_small_df, test_size=0.1, random_state=42)
 
     print("fitting...")
     pipeline = Pipeline(
         steps=[('scaler', StandardScaler()), ('model', Lasso())])
     glf = GridSearchCV(pipeline, param_grid={
         "model__alpha": np.arange(0.001, 0.01, 0.0001)}, cv=5, scoring="neg_root_mean_squared_error", n_jobs=-1)
-    glf.fit(train_df, ans_df)
+    glf.fit(X_train, y_train)
     print("done")
 
     print("----------------------------------------")
-    print(f"RMSE: {-glf.best_score_}")
+    print(f"cross validation中の最良RMSE: {-glf.best_score_}")
     print(f"最良パラメータ: {glf.best_params_}")
     print("----------------------------------------")
     coef_df = pd.DataFrame(
         glf.best_estimator_.named_steps["model"].coef_, index=exercise_C.descriptor_names(), columns=["coef"])
     print("## coef")
-    print(coef_df.sort_values("coef", ascending=False))
+    print(coef_df.reindex(coef_df.coef.abs().sort_values(ascending=False).index))
 
     print("----------------------------------------")
-    print("## test scores")
+    print("## scores")
     result_df = pd.DataFrame(glf.cv_results_)
     result_df.sort_values(
         by="rank_test_score", inplace=True)
@@ -43,15 +47,23 @@ def fit_model():
                     "params",
                      "mean_test_score"]])
 
-    # 訓練データに対する予測を比較する
     print("----------------------------------------")
+    print("## test")
     best = glf.best_estimator_
-    y_pred = best.predict(train_df)
-    print(f"訓練データ全体に対するRMSE: {np.sqrt(mean_squared_error(ans_df, y_pred))}")
+    y_pred = best.predict(X_test)
+    print(f"テストデータセットに対するRMSE: {np.sqrt(mean_squared_error(y_test, y_pred))}")
 
     # 相関係数
-    print(f"相関係数: {np.corrcoef(ans_df, y_pred)[0, 1]}")
+    print(f"テストデータセットでの相関係数: {np.corrcoef(y_test, y_pred)[0, 1]}")
+    plt.scatter(list(map(toPPB, y_pred)), list(map(toPPB, y_test)))
+    plt.xlabel(r"$Test\, Predicted\, f_b$")
+    plt.ylabel(r"$Test\, f_b$")
+    plt.savefig("./output/ex_E_test.png")
     print("----------------------------------------")
+
+
+def toPPB(lnKa: float) -> float:
+    return 1 / (1 + np.exp(lnKa / 0.3))
 
 
 if __name__ == "__main__":
