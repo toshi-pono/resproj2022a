@@ -1,5 +1,6 @@
 import numpy as np
 import pandas as pd
+import matplotlib.pyplot as plt
 
 from sklearn.preprocessing import StandardScaler
 from sklearn.ensemble import RandomForestRegressor
@@ -9,23 +10,24 @@ from sklearn.metrics import mean_squared_error
 
 import loadData
 import pickle
+import exercise_D
 
 
 def main():
     print("loading...")
-    train_df, ans_df = loadData.load_data_from_smile_csv(
+    X_train, y_train = loadData.load_data_from_smile_csv(
         "data/SM.csv", use_cache=True)
-    test_df, test_ans_df = loadData.load_data_from_smile_csv(
+    X_test, y_test = loadData.load_data_from_smile_csv(
         "data/CP.csv", use_cache=True)
 
     print("fitting...")
-    param_grid = {'model__max_depth': np.arange(2, 15, 1),
-                  'model__min_samples_leaf': np.arange(1, 10, 1)}
+    param_grid = {'model__max_depth': np.arange(10, 15, 1),
+                  'model__min_samples_leaf': np.arange(1, 5, 1)}
     pipeline = Pipeline(
-        steps=[('scaler', StandardScaler()), ('model', RandomForestRegressor())])
+        steps=[('scaler', StandardScaler()), ('model', RandomForestRegressor(n_estimators=500))])
     glf = GridSearchCV(pipeline, param_grid, cv=5,
                        scoring="neg_root_mean_squared_error", n_jobs=-1)
-    glf.fit(train_df, ans_df)
+    glf.fit(X_train, y_train)
 
     # save glf
     with open("output/glf.pkl", "wb") as f:
@@ -46,10 +48,15 @@ def main():
                      "mean_test_score"]])
 
     print("----------------------------------------")
-    test_pred = glf.best_estimator_.predict(test_df)
+    y_pred = glf.best_estimator_.predict(X_test)
     print(
-        f"テストデータ全体に対するRMSE: {np.sqrt(mean_squared_error(test_ans_df, test_pred))}")
-    print(f"相関係数: {np.corrcoef(test_ans_df, test_pred)[0, 1]}")
+        f"CP対するRMSE: {np.sqrt(mean_squared_error(y_test, y_pred))}")
+    print(f"CPとの相関係数: {np.corrcoef(y_test, y_pred)[0, 1]}")
+    plt.scatter(list(map(exercise_D.toPPB, y_pred)),
+                list(map(exercise_D.toPPB, y_test)))
+    plt.xlabel(r"$Test\, Predicted\, f_b$")
+    plt.ylabel(r"$Test\, f_b$")
+    plt.savefig("./output/ex_I_test.png")
     print("----------------------------------------")
 
 
