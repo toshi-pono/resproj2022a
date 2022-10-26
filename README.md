@@ -20,12 +20,19 @@ $ pip install -r requirements.txt
 ## usage
 
 プロジェクトルートで、以下のコマンドを実行することにより動かすことができます
+ただし、exercise_I2.py を実行するには、事前に`exercise_I.py`を実行する必要があります
 
 ```sh
 $ python exercise_*.py
 ```
 
-ファイルの出力先は、`output`ディレクトリになります
+例）
+
+```sh
+$ python exercise_A.py
+```
+
+ファイルの出力先は、`output`ディレクトリです
 
 ## 引用論文
 
