@@ -18,4 +18,4 @@ def calc_lnka(fb: float) -> float:
 
 
 def toPPB(lnKa: float) -> float:
-    return 1 / (1 + math.exp(lnKa / 0.3))
+    return math.exp(lnKa / 0.3) / (1 + math.exp(lnKa / 0.3))
