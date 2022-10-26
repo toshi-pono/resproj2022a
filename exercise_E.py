@@ -14,13 +14,15 @@ import exercise_C
 import exercise_D
 
 
-def fit_model():
+def main():
+    # データの読み込み
     print("loading...")
     X_small_df, y_small_df = loadData.load_data_from_smile_csv(
         "data/SM.csv", use_cache=True)
     X_train, X_test, y_train, y_test = train_test_split(
         X_small_df, y_small_df, test_size=0.1, random_state=42)
 
+    # モデルの構築
     print("fitting...")
     pipeline = Pipeline(
         steps=[('scaler', StandardScaler()), ('model', Lasso())])
@@ -29,9 +31,11 @@ def fit_model():
     glf.fit(X_train, y_train)
     print("done")
 
+    # モデルの評価
     print("----------------------------------------")
     print(f"cross validation中の最良RMSE: {-glf.best_score_}")
     print(f"最良パラメータ: {glf.best_params_}")
+
     print("----------------------------------------")
     coef_df = pd.DataFrame(
         glf.best_estimator_.named_steps["model"].coef_, index=exercise_C.descriptor_names(), columns=["coef"])
@@ -53,8 +57,6 @@ def fit_model():
     best = glf.best_estimator_
     y_pred = best.predict(X_test)
     print(f"テストデータセットに対するRMSE: {np.sqrt(mean_squared_error(y_test, y_pred))}")
-
-    # 相関係数
     print(f"テストデータセットでの相関係数: {np.corrcoef(y_test, y_pred)[0, 1]}")
     plt.scatter(list(map(exercise_D.toPPB, y_pred)),
                 list(map(exercise_D.toPPB, y_test)))
@@ -65,4 +67,4 @@ def fit_model():
 
 
 if __name__ == "__main__":
-    fit_model()
+    main()

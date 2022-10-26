@@ -14,12 +14,14 @@ import exercise_D
 
 
 def main():
+    # データの読み込み
     print("loading...")
     X_train, y_train = loadData.load_data_from_smile_csv(
         "data/SM.csv", use_cache=True)
     X_test, y_test = loadData.load_data_from_smile_csv(
         "data/CP.csv", use_cache=True)
 
+    # モデルの構築
     print("fitting...")
     param_grid = {'model__max_depth': np.arange(10, 15, 1),
                   'model__min_samples_leaf': np.arange(1, 5, 1)}
@@ -29,12 +31,11 @@ def main():
                        scoring="neg_root_mean_squared_error", n_jobs=-1)
     glf.fit(X_train, y_train)
 
-    # save glf
     with open("output/glf.pkl", "wb") as f:
         pickle.dump(glf, f)
-
     print("done")
 
+    # モデルの評価
     print("----------------------------------------")
     print(f"RMSE: {-glf.best_score_}")
     print(f"最良パラメータ: {glf.best_params_}")

@@ -14,12 +14,14 @@ import exercise_D
 
 
 def main():
+    # データの読み込み
     print("loading...")
     X_train, y_train = loadData.load_data_from_smile_csv(
         "data/SM.csv", use_cache=True)
     X_test, y_test = loadData.load_data_from_smile_csv(
         "data/CP.csv", use_cache=True)
 
+    # モデルの構築
     print("fitting...")
     pipeline = Pipeline(
         steps=[('scaler', StandardScaler()), ('model', Lasso())])
@@ -30,6 +32,7 @@ def main():
         pickle.dump(glf.best_estimator_, f)
     print("done")
 
+    # モデルの評価
     print("----------------------------------------")
     pred_test = glf.best_estimator_.predict(X_test)
     print(
