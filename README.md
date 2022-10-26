@@ -30,3 +30,8 @@ $ python exercise_*.py
 ## 引用論文
 
 Takashi Tajimi, Naoki Wakui, Keisuke Yanagisawa, Yasushi Yoshikawa, Masahito Ohue, and Yutaka Akiyama. "Computational prediction of plasma protein binding of cyclic peptides from small molecule experimental data using sparse modeling techniques", BMC Bioinformatics 19(Suppl 19): 527, 2018. doi: [10.1186/s12859-018-2529-z](https://doi.org/10.1186/s12859-018-2529-z)
+
+## Data について
+
+data ディレクトリには、Tajimi らの論文に掲載されているデータを使用しています。
+http://www.bi.cs.titech.ac.jp/giw2018/SupplementaryTableS1.xlsx
