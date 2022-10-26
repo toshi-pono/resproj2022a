@@ -50,7 +50,7 @@ def main():
     print("----------------------------------------")
     y_pred = glf.best_estimator_.predict(X_test)
     print(
-        f"CP対するRMSE: {np.sqrt(mean_squared_error(y_test, y_pred))}")
+        f"CPでのRMSE: {np.sqrt(mean_squared_error(y_test, y_pred))}")
     print(f"CPとの相関係数: {np.corrcoef(y_test, y_pred)[0, 1]}")
     plt.scatter(list(map(exercise_D.toPPB, y_pred)),
                 list(map(exercise_D.toPPB, y_test)))
